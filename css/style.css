@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "norse-bold";
+    src: url(../resources/font/Norse-Bold.otf) format("opentype");
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -6,4 +11,79 @@
 
 body{
     min-height: 100vh;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.5fr 8fr 0.5fr;
+
+    --outer-elements-color: peachpuff;
+}
+
+header{
+    max-height: 15vh;
+    background-color: var(--outer-elements-color);
+
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+    padding: 2vh 0;
+
+    gap: 32px;
+}
+
+footer{
+    max-height: 5vh;
+    background-color: var(--outer-elements-color);
+}
+
+.content{
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+
+    padding: 2vh 2vh;
+
+    width: 100vw;
+    max-width: 80vh;
+    
+    aspect-ratio: 1/1;
+}
+
+.grid-square{
+    background-color: gray;
+
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 1/1;
+
+    border: 1px solid black;
+}
+
+.grid-square:nth-child(even){
+    background-color: peachpuff;
+}
+
+.grid-square:hover{
+    opacity: 0.6;
+}
+
+#logo{
+    filter: invert(1);
+
+    max-height: 13vh;
+    max-width: 13vh;
+}
+
+#title{
+    font-family: "norse-bold", sans-serif;
+    font-size: 4rem;
 }
