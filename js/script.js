@@ -2,12 +2,10 @@ function createPlayer(name, marker){
     return {name, marker};
 }
 
-function run(){
-    const player1 = createPlayer("Adam", "X");
-    const player2 = createPlayer("Ben", "O");
 
-    let currentPlayer = player1;
 
+
+function main(){
     const gameboard = (function(){
         let board = [1,2,3,4,5,6,7,8,9];
 
@@ -15,7 +13,7 @@ function run(){
             return `${board[0]} ${board[1]} ${board[2]}\n${board[3]} ${board[4]} ${board[5]}\n${board[6]} ${board[7]} ${board[8]}`;
         }
 
-        const placeMarker = function(marker, spotChoice){
+        const placeMarker = function(marker, square){
             if(board[spotChoice] === "X" || board[spotChoice] === "O") return false;
 
             board[spotChoice] = marker;
@@ -83,13 +81,32 @@ function run(){
         return {playRound, checkForWinner};
     })();
 
+    const player1 = createPlayer("Adam", "X");
+    const player2 = createPlayer("Ben", "O");
+
+    let currentPlayer = player1;
+
+    function addGridSquareListeners(){
+        const gridSquares = document.querySelectorAll(".grid-square");
+        gridSquares.forEach((square) => {
+            square.addEventListener('click', function(e){
+                const success = gameboard.placeMarker(currentPlayer.marker, square);
+                if(!success) return;
+
+                
+            });
+        });
+    }
+    addGridSquareListeners();
+
+    //Game Loop
     while(true){
         console.log(gameboard.boardFormattedAsString());
         console.log();
 
-        gameMaster.playRound(currentPlayer, gameboard);
+        //gameMaster.playRound(currentPlayer, gameboard);
 
-        const winnerResult = gameMaster.checkForWinner(gameboard.board);
+        //const winnerResult = gameMaster.checkForWinner(gameboard.board);
 
         if(!!winnerResult){
             if(winnerResult === "TIE"){
@@ -109,3 +126,4 @@ function run(){
         currentPlayer = currentPlayer === player1 ? player2 : player1;
     }
 }
+
