@@ -13,3 +13,4 @@ An interactive Tic Tac Toe game playable in the browser.
 ## Link
 This game can be played at the following link:
 adamdrsinc.github.io/odin-tic-tac-toe
+[click here](adamdrsinc.github.io/odin-tic-tac-toe)
