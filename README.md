@@ -11,6 +11,5 @@ An interactive Tic Tac Toe game playable in the browser.
 - Learnt about JavaScript coding principles such as factory methods and IIFEs.
 
 ## Link
-This game can be played at the following link:
-adamdrsinc.github.io/odin-tic-tac-toe
-[click here](adamdrsinc.github.io/odin-tic-tac-toe)
+This game can be played by [clicking this link.](adamdrsinc.github.io/odin-tic-tac-toe)
+
