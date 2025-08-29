@@ -9,3 +9,7 @@ An interactive Tic Tac Toe game playable in the browser.
 ## Learnt
 - Enhanced my knowledge of grid and flexbox and styling using CSS.
 - Learnt about JavaScript coding principles such as factory methods and IIFEs.
+
+## Link
+This game can be played at the following link:
+adamdrsinc.github.io/odin-tic-tac-toe
