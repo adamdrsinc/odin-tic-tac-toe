@@ -17,6 +17,8 @@ function main(){
             if(board[spotChoice] === "X" || board[spotChoice] === "O") return false;
 
             board[spotChoice] = marker;
+            square.innerHTML = `<p class="marker">${currentPlayer.marker}</p>`
+
             return true;
         }
 
@@ -93,37 +95,26 @@ function main(){
                 const success = gameboard.placeMarker(currentPlayer.marker, square);
                 if(!success) return;
 
+                const winnerResult = gameMaster.checkForWinner(gameboard.board);
+
+                if(!!winnerResult){
+                    if(winnerResult === "TIE"){
+                        console.log(`There has been a tie.`);
+                        console.log(`Tying Board:`);
+                        console.log(gameboard.displayBoard());
+                    } else {
+                        const winningPlayer = player1.marker === winnerResult.winningMarker ? player1.name : player2.name;
+                        console.log(`${winningPlayer} wins!`);
+                        console.log(`Winning Board:`);
+                        gameboard.displayBoard();
+                    }
+                }
+
+                currentPlayer = currentPlayer === player1 ? player2 : player1;
                 
             });
         });
     }
     addGridSquareListeners();
-
-    //Game Loop
-    while(true){
-        console.log(gameboard.boardFormattedAsString());
-        console.log();
-
-        //gameMaster.playRound(currentPlayer, gameboard);
-
-        //const winnerResult = gameMaster.checkForWinner(gameboard.board);
-
-        if(!!winnerResult){
-            if(winnerResult === "TIE"){
-                console.log(`There has been a tie.`);
-                console.log(`Tying Board:`);
-                console.log(gameboard.displayBoard());
-            } else {
-                const winningPlayer = player1.marker === winnerResult.winningMarker ? player1.name : player2.name;
-                console.log(`${winningPlayer} wins!`);
-                console.log(`Winning Board:`);
-                gameboard.displayBoard();
-            }
-
-            break;
-        } 
-
-        currentPlayer = currentPlayer === player1 ? player2 : player1;
-    }
 }
 
