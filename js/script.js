@@ -32,7 +32,7 @@ function main(){
             const squareIndex = square.getAttribute("square-id");
             if(board[squareIndex] === xMarker || board[squareIndex] === oMarker) return false;
 
-            board[squareIndex] = marker;
+            board[squareIndex] = String(marker);
             if(marker === xMarker){
                 square.innerHTML = `<div class="marker x"></div>`
             } else {
@@ -47,10 +47,12 @@ function main(){
 
     const gameMaster = (function(){
         const checkForWinner = function(board){
+            console.log(board);
+
             //Checking horizontal and vertical
-            for(let i = 0; i < 3; i+=3){
-                if(board[i] === board[i+1] && board[i+1] === board[i+2]){
-                    return board[i];
+            for(let i = 0; i < 3; i++){
+                if(board[i*3] === board[i*3+1] && board[i*3+1] === board[i*3+2]){
+                    return board[i*3];
                 }
             }
 
@@ -85,25 +87,7 @@ function main(){
             return null;
         }
 
-        const playRound = function(player, board){
-            function askPlayerForMarkerPlacement(player){
-                let input = -1;
-                while(isNaN(input) || input < 1 || input > 9){
-                    input = parseInt(prompt(`${player.name}'s turn`));
-                }
-
-                return input;
-            }
-
-            let playerInput = askPlayerForMarkerPlacement(player) - 1;
-            let markerPlacementResult = board.placeMarker(player.getMarker(), playerInput);
-            while(!markerPlacementResult){
-                playerInput = askPlayerForMarkerPlacement(player) - 1;
-                markerPlacementResult = board.placeMarker(player.getMarker(), playerInput);
-            }
-        }
-
-        return {playRound, checkForWinner};
+        return {checkForWinner};
     })();
 
     const player1 = createPlayer("Player 1", xMarker);
