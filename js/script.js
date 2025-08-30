@@ -166,8 +166,17 @@ function main(){
         })
     }
 
+    function addResetListener(){
+        const resetButton = document.getElementById("reset-button");
+        resetButton.addEventListener('click', () => {
+            gameboard.resetBoard();
+            gameMaster.resetGame();
+        });
+    }
+
     addGridSquareListeners();
     addFormListener();
+    addResetListener();
 }
 
 main();
