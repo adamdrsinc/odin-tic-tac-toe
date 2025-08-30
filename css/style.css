@@ -76,6 +76,10 @@ footer{
     opacity: 0.6;
 }
 
+.no-hover{
+    pointer-events: none;
+}
+
 #logo{
     filter: invert(1);
 
@@ -86,4 +90,21 @@ footer{
 #title{
     font-family: "norse-bold", sans-serif;
     font-size: 4rem;
+}
+
+.marker{
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.marker.o{
+    content:url(../resources/img/o.svg);
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.marker.x{
+    content:url(../resources/img/x.svg);
+        min-height: 100%;
+    min-width: 100%;
 }
