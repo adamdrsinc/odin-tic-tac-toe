@@ -67,6 +67,8 @@ form{
     margin: 0 1vw;
     min-width: 60%;
     gap: 24px;
+
+    font-family: "norse-bold", sans-serif;
 }
 
 .player-input{
@@ -110,12 +112,48 @@ input + label{
     margin-top: 1vh;
 }
 
+#grid-container{
+    position: relative;
+}
+
+#grid,
+#overlay{
+    padding: 2vh 2vh;
+}
+
+#overlay{
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    height: 100%;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.8);
+}
+
+#overlay.make-visible{
+    display: block;
+}
+
+#overlay-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+
+    font-size: 6rem;
+    color: white;
+    font-family: "norse-bold", 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 #grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-
-    padding: 2vh 2vh;
 
     width: 100vw;
     max-width: 80vh;

@@ -2,9 +2,24 @@ function main(){
     const xMarker = "X";
     const oMarker = "O";
 
-    function createPlayer(name, marker){
-        return {name, marker};
-    }   
+    function playerPrototype(playerName){
+        let name = playerName;
+        const getName = () => name;
+
+        const changeName = (newName) => {
+            name = newName;
+        }
+
+        return {getName, changeName};
+    }
+
+    function createPlayer(playerName, playerMarker){
+        const {getName, changeName} = playerPrototype(playerName);
+        const marker = playerMarker;
+        const getMarker = () => marker;
+
+        return {getName, getMarker, changeName};
+    } 
 
     const gameboard = (function(){
         let board = [1,2,3,4,5,6,7,8,9];
@@ -81,35 +96,54 @@ function main(){
             }
 
             let playerInput = askPlayerForMarkerPlacement(player) - 1;
-            let markerPlacementResult = board.placeMarker(player.marker, playerInput);
+            let markerPlacementResult = board.placeMarker(player.getMarker(), playerInput);
             while(!markerPlacementResult){
                 playerInput = askPlayerForMarkerPlacement(player) - 1;
-                markerPlacementResult = board.placeMarker(player.marker, playerInput);
+                markerPlacementResult = board.placeMarker(player.getMarker(), playerInput);
             }
         }
 
         return {playRound, checkForWinner};
     })();
 
-    const player1 = createPlayer("Adam", xMarker);
-    const player2 = createPlayer("Ben", oMarker);
+    const player1 = createPlayer("Player 1", xMarker);
+    const player2 = createPlayer("Player 2", oMarker);
 
     let currentPlayer = player1;
 
+    function toggleOverlay(bool){
+        const overlay = document.getElementById("overlay");
+        overlay.classList.add("make-visible");
+    }
+
+    function initiateTie(){
+        const overlayText = document.getElementById("overlay-text");
+        overlayText.innerHTML = `TIE`;
+
+        toggleOverlay(true);
+    }
+
+    function initiateWin(playerName){
+        const overlayText = document.getElementById("overlay-text");
+        overlayText.innerHTML = `${playerName} wins!`;
+
+        toggleOverlay(true);
+    }
+
     function squareEvent(e){
         const square = e.target;
-        const success = gameboard.placeMarker(currentPlayer.marker, square);
+        const success = gameboard.placeMarker(currentPlayer.getMarker(), square);
         if(!success) return;
 
         const winnerResult = gameMaster.checkForWinner(gameboard.board);
+        console.log(winnerResult);
 
         if(!!winnerResult){
             if(winnerResult === "TIE"){
-                console.log(`There has been a tie.`);
-                console.log(`Tying Board:`);
+                initiateTie();
             } else {
-                console.log(`${currentPlayer.name} wins!`);
-                console.log(`Winning Board:`);
+                const winningPlayer = winnerResult === xMarker ? player1 : player2;
+                initiateWin(winningPlayer.getName());
             }
         }
 
@@ -128,7 +162,28 @@ function main(){
         });
     }
 
+    function addFormListener(){
+        const form = document.getElementById("name-input-form");
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+
+            const player1Name = formData.get("player1Name");
+            const player2Name = formData.get("player2Name");
+
+            player1.changeName(player1Name);
+            player2.changeName(player2Name);
+
+            const label1 = document.getElementById("player-1-label");
+            const label2 = document.getElementById("player-2-label");
+
+            label1.innerHTML = `${player1.getName()}`;
+            label2.innerHTML = `${player2.getName()}`;
+        })
+    }
+
     addGridSquareListeners();
+    addFormListener();
 }
 
 main();

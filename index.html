@@ -15,28 +15,33 @@
     </header>
     <div class="content">
         <div id="user-column">
-            <form action="">
+            <form action="" id="name-input-form">
                 <div class="player-input">
-                    <label for="player-1">Player 1:</label>
+                    <label for="player-1" id="player-1-label">Player 1:</label>
                     <input type="text" id="player-1" name="player1Name" required>
                 </div>
                 <div class="player-input">
-                    <label for="player-2">Player 2:</label>
+                    <label for="player-2" id="player-2-label">Player 2:</label>
                     <input type="text" id="player-2" name="player2Name" required>
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit" form="name-input-form">Submit</button>
             </form>
         </div>
-        <div id="grid">
-            <div class="grid-square"></div>
-            <div class="grid-square"></div>
-            <div class="grid-square"></div>
-            <div class="grid-square"></div>
-            <div class="grid-square"></div>
-            <div class="grid-square"></div>
-            <div class="grid-square"></div>
-            <div class="grid-square"></div>
-            <div class="grid-square"></div>
+        <div id="grid-container">
+            <div id="grid">
+                <div class="grid-square"></div>
+                <div class="grid-square"></div>
+                <div class="grid-square"></div>
+                <div class="grid-square"></div>
+                <div class="grid-square"></div>
+                <div class="grid-square"></div>
+                <div class="grid-square"></div>
+                <div class="grid-square"></div>
+                <div class="grid-square"></div>
+            </div>
+            <div id="overlay">
+                <h2 id="overlay-text">Winner: </h2>
+            </div>
         </div>
     </div>
     <footer></footer>
