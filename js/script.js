@@ -1,25 +1,30 @@
+function playerPrototype(playerName){
+    let name = playerName;
+    const getName = () => name;
+
+    const changeName = (newName) => {
+        name = newName;
+    }
+
+    return {getName, changeName};
+}
+
+function createPlayer(playerName, playerMarker){
+    const {getName, changeName} = playerPrototype(playerName);
+    const marker = playerMarker;
+    const getMarker = () => marker;
+
+    return {getName, getMarker, changeName};
+} 
+
 function main(){
     const xMarker = "X";
     const oMarker = "O";
 
-    function playerPrototype(playerName){
-        let name = playerName;
-        const getName = () => name;
+    const player1 = createPlayer("Player 1", xMarker);
+    const player2 = createPlayer("Player 2", oMarker);
 
-        const changeName = (newName) => {
-            name = newName;
-        }
-
-        return {getName, changeName};
-    }
-
-    function createPlayer(playerName, playerMarker){
-        const {getName, changeName} = playerPrototype(playerName);
-        const marker = playerMarker;
-        const getMarker = () => marker;
-
-        return {getName, getMarker, changeName};
-    } 
+    let currentPlayer = player1;
 
     const gameboard = (function(){
         let board = [1,2,3,4,5,6,7,8,9];
@@ -42,7 +47,11 @@ function main(){
             return true;
         }
 
-        return {board, placeMarker, boardFormattedAsString};
+        const reset = function(){
+            board = [1,2,3,4,5,6,7,8,9];
+        }
+
+        return {board, placeMarker, boardFormattedAsString, reset};
     })();
 
     const gameMaster = (function(){
@@ -90,10 +99,28 @@ function main(){
         return {checkForWinner};
     })();
 
-    const player1 = createPlayer("Player 1", xMarker);
-    const player2 = createPlayer("Player 2", oMarker);
+    const pageMaster = (function(){
+        const reset = () => {
+            const squares = document.querySelectorAll(".grid-square");
+            squares.forEach(square => {
+                square.innerHTML = ``;
+                square.classList.remove("no-hover");
+            });
 
-    let currentPlayer = player1;
+            const overlay = document.getElementById("overlay");
+            overlay.classList.remove("make-visible");
+
+            const label1 = document.getElementById("player-1-label");
+            const label2 = document.getElementById("player-2-label");
+            label1.innerHTML = "Player 1";
+            label2.innerHTML = "Player 2";
+
+            resetGridSquareListeners();
+        };
+
+        return {reset};
+    })();
+
 
     function toggleOverlay(bool){
         const overlay = document.getElementById("overlay");
@@ -134,7 +161,7 @@ function main(){
         console.log(gameboard.boardFormattedAsString());
 
         currentPlayer = currentPlayer === player1 ? player2 : player1;
-        square.removeEventListener('click', squareEvent)
+        square.removeEventListener('click', squareEvent);
         square.classList.add("no-hover");
     }
     
@@ -169,8 +196,16 @@ function main(){
     function addResetListener(){
         const resetButton = document.getElementById("reset-button");
         resetButton.addEventListener('click', () => {
-            gameboard.resetBoard();
-            gameMaster.resetGame();
+            gameboard.reset();
+            pageMaster.reset();
+        });
+    }
+
+    function resetGridSquareListeners(){
+        const squares = document.querySelectorAll(".grid-square");
+        squares.forEach(square => {
+            square.removeEventListener('click', squareEvent);
+            square.addEventListener('click', squareEvent);
         });
     }
 
