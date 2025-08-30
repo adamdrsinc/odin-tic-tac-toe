@@ -39,10 +39,75 @@ footer{
 
 .content{
     max-height: 80vh;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+
+    justify-items: center;
+    align-items: center;
+}
+
+#user-column{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid black;
+    border-radius: 12px;
+
+    padding: 24px 32px;
+    margin: 0 1vw;
+    min-width: 60%;
+    gap: 24px;
+}
+
+.player-input{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    gap: 16px;
+}
+
+form label{
+    font-size: 2rem;
+}
+
+form input{
+    max-height: 64px;
+    min-height: 24px;
+    padding: 0 6px;
+}
+
+form button{
+    padding: 12px 32px;
+    margin-top: 1vh;
+
+    font-size: 1.5rem;
+
+    border-radius: 12px;
+
+    max-width: 200px;
+
+    cursor: pointer;
+
+    background-color: white;
+    transition: background-color 0.2s ease;
+}
+
+form button:hover{
+    background-color: lightgray;
+}
+
+input + label{
+    margin-top: 1vh;
 }
 
 #grid{

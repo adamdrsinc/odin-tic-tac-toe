@@ -14,8 +14,18 @@
         <h1 id="title">Odin Tic-Tac-Toe</h1>
     </header>
     <div class="content">
-        <div class="user-column">
-            
+        <div id="user-column">
+            <form action="">
+                <div class="player-input">
+                    <label for="player-1">Player 1:</label>
+                    <input type="text" id="player-1" name="player1Name" required>
+                </div>
+                <div class="player-input">
+                    <label for="player-2">Player 2:</label>
+                    <input type="text" id="player-2" name="player2Name" required>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
         </div>
         <div id="grid">
             <div class="grid-square"></div>
