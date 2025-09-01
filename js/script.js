@@ -1,28 +1,24 @@
-function playerPrototype(playerName){
-    let name = playerName;
-    const getName = () => name;
-
-    const changeName = (newName) => {
-        name = newName;
-    }
-
-    return {getName, changeName};
-}
-
-function createPlayer(playerName, playerMarker){
-    const {getName, changeName} = playerPrototype(playerName);
-    const marker = playerMarker;
-    const getMarker = () => marker;
-
-    return {getName, getMarker, changeName};
-} 
-
 function main(){
     const xMarker = "X";
     const oMarker = "O";
 
-    const player1 = createPlayer("Player 1", xMarker);
-    const player2 = createPlayer("Player 2", oMarker);
+    class Player{
+        #name;
+        #marker;
+
+        constructor(name, marker){
+            this.#name = name;
+            this.#marker = marker;
+        }
+
+        get name() {return this.#name};
+        set name(name){this.#name = name};
+        get marker(){return this.#marker};
+        set marker(marker){this.#marker = marker};
+    }
+
+    const player1 = new Player("Player 1", xMarker);
+    const player2 = new Player("Player 2", oMarker);
 
     let currentPlayer = player1;
 
@@ -47,11 +43,13 @@ function main(){
             return true;
         }
 
+        const getBoard = () => board;
+
         const reset = function(){
             board = [1,2,3,4,5,6,7,8,9];
         }
 
-        return {board, placeMarker, boardFormattedAsString, reset};
+        return {getBoard, placeMarker, boardFormattedAsString, reset};
     })();
 
     const gameMaster = (function(){
@@ -143,10 +141,10 @@ function main(){
 
     function squareEvent(e){
         const square = e.target;
-        const success = gameboard.placeMarker(currentPlayer.getMarker(), square);
+        const success = gameboard.placeMarker(currentPlayer.marker, square);
         if(!success) return;
 
-        const winnerResult = gameMaster.checkForWinner(gameboard.board);
+        const winnerResult = gameMaster.checkForWinner(gameboard.getBoard());
         console.log(winnerResult);
 
         if(!!winnerResult){
@@ -154,7 +152,7 @@ function main(){
                 initiateTie();
             } else {
                 const winningPlayer = winnerResult === xMarker ? player1 : player2;
-                initiateWin(winningPlayer.getName());
+                initiateWin(winningPlayer.name);
             }
         }
 
@@ -182,14 +180,14 @@ function main(){
             const player1Name = formData.get("player1Name");
             const player2Name = formData.get("player2Name");
 
-            player1.changeName(player1Name);
-            player2.changeName(player2Name);
+            player1.name = player1Name;
+            player2.name = player2Name;
 
             const label1 = document.getElementById("player-1-label");
             const label2 = document.getElementById("player-2-label");
 
-            label1.innerHTML = `${player1.getName()}`;
-            label2.innerHTML = `${player2.getName()}`;
+            label1.innerHTML = `${player1.name}`;
+            label2.innerHTML = `${player2.name}`;
         })
     }
 
